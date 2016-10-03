@@ -2,7 +2,7 @@
 
 I will explain how to
 
- - build Boost, OpenSG2, VRPN and inVRs in Linux (tested on Mint 18 Mate)
+ - build Boost, OpenSG2, VRPN and inVRs in Linux
  - configure, build and run the initial student project (of lecture [Virtual Reality][vr-lecture] at Ludwig Maximilians University Munich).
 
 [vr-lecture]: http://www.nm.ifi.lmu.de/teaching/Vorlesungen/2016ss/vr/
@@ -10,4 +10,4 @@ I will explain how to
 
 ## Project
 
-Our goal is to be able to run the initial student project on our Linux system. The initial `cmake` configuration only allows to develop in Windows and run the project in the cave at V2C/LRZ. We will modify the configuration files and install the required dependencies.
+The initial `cmake` configuration of the student project only allows to develop in Windows and run the project in the cave at V2C/LRZ. We will modify the configuration files and install the required dependencies. Our goal is to be able to run it on our Linux system. I use Linux Mint 18, but you should be able to adjust the instructions to your distribution.
