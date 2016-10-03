@@ -17,7 +17,12 @@ The initial `cmake` configuration of the student project only allows to develop 
 
 You need to build the following dependencies:
 
- - Boost (version 5.13.0)
- - OpenSG2 (Alpha released on 2015-01-16)
- - VRPN (version 7.33)
- - inVRs (revision 2647)
+ - [Boost][boost website] (version 5.13.0)
+ - [OpenSG2][opensg website] (Alpha released on 2015-01-16)
+ - [VRPN][vrpn website] (version 7.33)
+ - [inVRs][invrs website] (revision 2647)
+
+[boost website]: http://www.boost.org/
+[opensg website]: http://www.opensg.org/
+[vrpn website]: https://github.com/vrpn/vrpn
+[invrs website]: http://www.invrs.org/
