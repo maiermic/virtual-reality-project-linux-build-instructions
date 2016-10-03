@@ -77,7 +77,67 @@ sudo ./b2 install
 
 #### 2. OpenSG2
 
+OpenSG2 depends on a lot of packages. I've grouped them in the following installation command. If a package is not available in your Linux distribution, you have to search for equivalent packages. If you can not find one or if you get a build error open an issue and I'll try to help.
 
+```sh
+sudo apt-get install \
+  cmake \
+  zlib1g zlib1g-dev \
+  libfreetype6 libfreetype6-dev \
+  libtiff5 libtiff5-dev \
+  libgdal1i libgdal-dev \
+  libopenexr22 libopenexr-dev \
+  freeglut3 freeglut3-dev \
+  qt4-default \
+  libpython-all-dev \
+  doxygen \
+  fontconfig libfontconfig1 libfontconfig1-dev \
+  libxi6 libxi-dev \
+  libxmu6 libxmu-dev \
+  libqt4-opengl libqt4-opengl-dev
+```
+
+After you installed the required dependencies we need to clone the OpenSG repository:
+
+```sh
+git clone git://git.code.sf.net/p/opensg/code opensg
+```
+
+Change to the source directory:
+
+```sh
+cd opensg
+```
+
+and checkout the version of 2015-01-16:
+
+```sh
+git checkout edc6d77bf263695d0ca0e11306d1fecd1be18510
+```
+
+Next create a build directory and go into it:
+
+```sh
+mkdir build && cd build
+```
+
+First we generate a build environment using `cmake`:
+
+```sh
+cmake ..
+```
+
+Build the project:
+
+```sh
+make
+```
+
+and install OpenSG:
+
+```sh
+sudo make install
+```
 
 
 #### 3. VRPN
