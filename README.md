@@ -193,5 +193,74 @@ sudo make install
 
 #### 4. inVRs
 
+Install subversion (if not already installed):
 
+```sh
+sudo apt-get install subversion
+```
 
+Checkout source code revision 2647 (current version in V2C):
+
+```sh
+svn checkout -r 2647 https://svn.lrz.de/repos/inVRs/branches/inVRs_OSG
+```
+
+Change to source directory:
+
+```sh
+cd inVRs_OSG/
+```
+
+Open `user.cmake` in your favorite text editor. 
+
+ - enable VRPN support
+   - uncomment the line `#set (INVRS_ENABLE_VRPN_SUPPORT ON)`
+   - just remove `#` at the beginning; it should look like this `set (INVRS_ENABLE_VRPN_SUPPORT ON)`
+ - configure VRPN:
+   - replace `#set (vrpn_ROOT_DIR $env(VRPN_HOME) )` with `set (vrpn_ROOT_DIR /usr/local)`
+   - uncomment `#set (vrpn_INCLUDE_DIR $(vrpn_ROOT_DIR)/include )` to `set (vrpn_INCLUDE_DIR $(vrpn_ROOT_DIR)/include )`
+ - configure OpenSG:
+   - replace `#set (OPENSG_BIN_DIR /bin)` with
+
+     ```cmake
+     set (OPENSG_BIN_DIR /path/to/opensg/build/bin)
+     set (OPENSG_ROOT /usr/local/)
+     ```
+
+     and change `/path/to/opensg` to the source directory (cloned repository) of OpenSG2.
+
+To fix a compilation error with my GNU C++ compiler, (I had to) edit source file `/path/to/inVRs_OSG/src/inVRs/Modules/Interaction/SharedManipulationMerger.cpp`. Replace `isnan` with `std::isnan` in line 207:
+ - **before**
+
+   ```c++
+                   if (isnan(result.position[0])) {
+   ```
+ - **after**
+
+   ```c++
+                   if (std::isnan(result.position[0])) {
+   ```
+
+Next create a build directory and go into it:
+
+```sh
+mkdir build && cd build
+```
+
+Generate build environment using `cmake`:
+
+```sh
+cmake -C ../user.cmake -D CMAKE_CXX_FLAGS="-std=c++11" ..
+```
+
+Build project:
+
+```sh
+make
+```
+
+Install inVRs:
+
+```sh
+sudo make install
+```
