@@ -27,7 +27,7 @@ You need to build the following dependencies:
 [vrpn website]: https://github.com/vrpn/vrpn
 [invrs website]: http://www.invrs.org/
 
-I will describe how to build and install them in the given order. I choose `/sw` as installation target directory.
+I will describe how to build and install them in the given order.
 
 
 #### 1. Boost
@@ -62,10 +62,10 @@ Then we change to the extracted source directory:
 cd boost_1_53_0
 ```
 
-First we have to prepare/configure installation. `--prefix=/sw` defines `/sw` as installation target directory:
+First we have to prepare/configure installation. `--prefix=/usr/local` defines `/usr/local` as installation target directory:
 
 ```sh
-sudo ./bootstrap.sh --prefix=/sw
+sudo ./bootstrap.sh --prefix=/usr/local
 ```
 
 Now we can start installation:
