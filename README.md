@@ -26,3 +26,26 @@ You need to build the following dependencies:
 [opensg website]: http://www.opensg.org/
 [vrpn website]: https://github.com/vrpn/vrpn
 [invrs website]: http://www.invrs.org/
+
+I will describe how to build and install them in the given order.
+
+
+#### 1. Boost
+
+
+
+
+#### 2. OpenSG2
+
+
+
+
+#### 3. VRPN
+
+
+
+
+#### 4. inVRs
+
+
+
