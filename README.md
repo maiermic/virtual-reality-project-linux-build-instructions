@@ -27,12 +27,52 @@ You need to build the following dependencies:
 [vrpn website]: https://github.com/vrpn/vrpn
 [invrs website]: http://www.invrs.org/
 
-I will describe how to build and install them in the given order.
+I will describe how to build and install them in the given order. I choose `/sw` as installation target directory.
 
 
 #### 1. Boost
 
+First we install (GNU) C++ compiler (not shipped with Linux Mint 18)
 
+```sh
+sudo apt-get install g++
+```
+
+Then we download Boost 1.53.0 source code (as 7z-archive) into the current directory:
+
+```sh
+wget -O boost_1_53_0.7z https://sourceforge.net/projects/boost/files/boost/1.53.0/boost_1_53_0.7z/download
+```
+
+Extract source code to `./boost_1_53_0` directory:
+
+```sh
+7z x boost_1_53_0.7z
+```
+
+We don't need the archive anymore. So let's delete it:
+
+```sh
+rm -f boost_1_53_0.7z
+```
+
+Then we change to the extracted source directory:
+
+```sh
+cd boost_1_53_0
+```
+
+First we have to prepare/configure installation. `--prefix=/sw` defines `/sw` as installation target directory:
+
+```sh
+sudo ./bootstrap.sh --prefix=/sw
+```
+
+Now we can start installation:
+
+```sh
+sudo ./b2 install
+```
 
 
 #### 2. OpenSG2
