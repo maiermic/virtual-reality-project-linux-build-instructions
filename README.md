@@ -301,7 +301,7 @@ Next open `./user.cmake`. You find a system differentiation in line 54:
 ...
 ```
 
-The `else` branch in line 70 defines installation directories of the dependencies for the V2C/LRZ. They are different on our system. Hence, we need to check if we are running `cmake` on our own system. Therefore, I use a new cmake variable `IS_MY_LINUX_SYSTEM` (you might prefer a different variable name). Add before line 70:
+The `else` branch in line 70 defines installation directories of the dependencies for the V2C/LRZ. They are different on our system. Hence, we need to check if we are running `cmake` on our own system. Therefore, I use a environment variable `IS_MY_LINUX_SYSTEM` to identify my system (you might prefer a different variable name). Add before line 70:
 
 ```cmake
 elseif(IS_MY_LINUX_SYSTEM)
@@ -310,6 +310,14 @@ elseif(IS_MY_LINUX_SYSTEM)
   set(OPENSG_ROOT /usr/local CACHE PATH ${USER_CMAKE_TEXT})
   set(CAVESceneManager_DIR /home/user/inVRs_OSG/lib/cmake/CAVESceneManager CACHE PATH ${USER_CMAKE_TEXT})
   set(VRPN_ROOT_DIR /usr/local CACHE PATH ${USER_CMAKE_TEXT})
+```
+
+We have to convert our environment variable to `BOOL`. Do this by setting a cmake variable with the same name `IS_MY_LINUX_SYSTEM` by adding the following line at the bottom of the `WHAT YOU CAN EASILY CHANGE` section (line 19):
+
+```cmake
+# Set environment variable IS_MY_LINUX_SYSTEM=TRUE on your own Linux system
+# and set it IS_MY_LINUX_SYSTEM=FALSE or do not define it, when you generate build environment in V2C/LRZ.
+set(IS_MY_LINUX_SYSTEM $ENV{IS_MY_LINUX_SYSTEM} CACHE BOOL {USER_CMAKE_TEXT})
 ```
 
 Further, you need to replace `config/mono.csm` in your student project with the `mono.csm` of this repository. It is a copy of the file `/sw/config/opensg/csm/mono.csm` of the V2C/LRZ system (see `start_demo_Release` script).
@@ -329,10 +337,10 @@ Go into it:
 cd build
 ```
 
-Generate build environment:
+When you generate build environment set `IS_MY_LINUX_SYSTEM=TRUE` before (set it to `FALSE` or leave it, when you generate build environment in V2C/LRZ):
 
 ```sh
-cmake -C ../user.cmake -D CMAKE_CXX_FLAGS="-std=c++11" IS_MY_LINUX_SYSTEM="TRUE" ..
+IS_MY_LINUX_SYSTEM=TRUE cmake -C ../user.cmake -D CMAKE_CXX_FLAGS="-std=c++11" ..
 ```
 
 Building project:
