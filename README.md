@@ -278,7 +278,7 @@ cd /path/to/your/student_project
 Open `./cmake/Modules/AddProject.cmake` and add
 
 ```sh
-target_link_libraries(${ADD_PROJECT_NAME} -lGL -lpthread)
+        target_link_libraries(${ADD_PROJECT_NAME} -lGL -lpthread)
 ```
 
 after line 149. Result look like this (without line numbers at the beginning):
