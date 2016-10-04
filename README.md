@@ -319,7 +319,7 @@ We have to convert our environment variable to `BOOL`. Do this by setting a cmak
 
 ```cmake
 # Set environment variable IS_MY_LINUX_SYSTEM=TRUE on your own Linux system
-# and set it IS_MY_LINUX_SYSTEM=FALSE or do not define it, when you generate build environment in V2C/LRZ.
+# and set IS_MY_LINUX_SYSTEM=FALSE or do not define it, when you generate build environment in V2C/LRZ.
 set(IS_MY_LINUX_SYSTEM $ENV{IS_MY_LINUX_SYSTEM} CACHE BOOL {USER_CMAKE_TEXT})
 ```
 
