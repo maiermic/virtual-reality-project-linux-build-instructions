@@ -7,6 +7,9 @@ I will explain how to
 
 [vr-lecture]: http://www.nm.ifi.lmu.de/teaching/Vorlesungen/2016ss/vr/
 
+**!!! Caution !!!**
+Follow the instructions carefully and think about each command before you run it. I assume no responsibility if you break your system.
+
 
 ## Project
 
