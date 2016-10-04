@@ -330,11 +330,22 @@ The `else` branch in line 70 defines installation directories of the dependencie
 
 ```cmake
 elseif(IS_MY_LINUX_SYSTEM)
-  set(BOOST_ROOT /usr CACHE PATH ${USER_CMAKE_TEXT})
-  set(BOOST_LIBRARYDIR /usr/lib/x86_64-linux-gnu CACHE PATH ${USER_CMAKE_TEXT})
-  set(OPENSG_ROOT /usr/local CACHE PATH ${USER_CMAKE_TEXT})
-  set(CAVESceneManager_DIR /home/user/inVRs_OSG/lib/cmake/CAVESceneManager CACHE PATH ${USER_CMAKE_TEXT})
-  set(VRPN_ROOT_DIR /usr/local CACHE PATH ${USER_CMAKE_TEXT})
+    set(BOOST_ROOT /path/to/installation/of/boost/ CACHE PATH ${USER_CMAKE_TEXT})
+    set(OPENSG_ROOT /path/to/installation/of/opensg/ CACHE PATH ${USER_CMAKE_TEXT})
+    set(inVRs_ROOT_DIR /path/to/installation/of/inVRs/ CACHE PATH ${USER_CMAKE_TEXT})
+    set(CAVESceneManager_DIR ${inVRs_ROOT_DIR}/lib/cmake/CAVESceneManager CACHE PATH ${USER_CMAKE_TEXT})
+    set(VRPN_ROOT_DIR /path/to/installation/of/vrpn/ CACHE PATH ${USER_CMAKE_TEXT})
+```
+
+Remember to adjust all paths to your system. For example, I installed all dependencies in its own subdirectory of `/sw`:
+
+```cmake
+elseif(IS_MY_LINUX_SYSTEM)
+    set(BOOST_ROOT /sw/boost/1.53.0/ CACHE PATH ${USER_CMAKE_TEXT})
+    set(OPENSG_ROOT /sw/opensg/2.0/2015-01-16/ CACHE PATH ${USER_CMAKE_TEXT})
+    set(inVRs_ROOT_DIR /sw/inVRs/rev2647/ CACHE PATH ${USER_CMAKE_TEXT})
+    set(CAVESceneManager_DIR ${inVRs_ROOT_DIR}/lib/cmake/CAVESceneManager CACHE PATH ${USER_CMAKE_TEXT})
+    set(VRPN_ROOT_DIR /sw/vrpn/7.33/ CACHE PATH ${USER_CMAKE_TEXT})
 ```
 
 We have to convert our environment variable to `BOOL`. Do this by setting a cmake variable with the same name `IS_MY_LINUX_SYSTEM` by adding the following line at the bottom of the `WHAT YOU CAN EASILY CHANGE` section (line 19):
