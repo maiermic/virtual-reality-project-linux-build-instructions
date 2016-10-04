@@ -56,7 +56,7 @@ We don't need the archive anymore. So let's delete it:
 rm -f boost_1_53_0.7z
 ```
 
-Then we change to the extracted source directory:
+Then we go to the extracted source directory:
 
 ```sh
 cd boost_1_53_0
@@ -103,7 +103,7 @@ After you installed the required dependencies we need to clone the OpenSG reposi
 git clone git://git.code.sf.net/p/opensg/code opensg
 ```
 
-Change to the source directory:
+Go to the source directory:
 
 ```sh
 cd opensg
@@ -160,7 +160,7 @@ We don't need the archive anymore. So let's delete it:
 rm -f vrpn_07_33.zip
 ```
 
-Change to source directory:
+Go to source directory:
 
 ```sh
 cd vrpn
@@ -205,7 +205,7 @@ Checkout source code revision 2647 (current version in V2C):
 svn checkout -r 2647 https://svn.lrz.de/repos/inVRs/branches/inVRs_OSG
 ```
 
-Change to source directory:
+Go to source directory:
 
 ```sh
 cd inVRs_OSG/
