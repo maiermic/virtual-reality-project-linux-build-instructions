@@ -130,6 +130,25 @@ First we generate a build environment using `cmake`:
 cmake ..
 ```
 
+> ##### Notes
+> If you like to change the installation directory use `CMAKE_INSTALL_PREFIX`, for example
+>
+> ```sh
+> cmake -D CMAKE_INSTALL_PREFIX=/sw/opensg/2.0/2015-01-16 ..
+> ```
+> 
+> If you installed Boost in a different directory specify `BOOST_ROOT`, for example
+>
+> ```sh
+> cmake -D BOOST_ROOT=/sw/boost/1.53.0 ..
+> ```
+>
+> Both combined look like this:
+>
+> ```sh
+> cmake -D BOOST_ROOT=/sw/boost/1.53.0 -D CMAKE_INSTALL_PREFIX=/sw/opensg/2.0/2015-01-16 ..
+> ```
+
 Build the project:
 
 ```sh
