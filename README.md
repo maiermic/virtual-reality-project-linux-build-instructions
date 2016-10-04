@@ -309,7 +309,7 @@ elseif(IS_MY_LINUX_SYSTEM)
   set(BOOST_LIBRARYDIR /usr/lib/x86_64-linux-gnu CACHE PATH ${USER_CMAKE_TEXT})
   set(OPENSG_ROOT /usr/local CACHE PATH ${USER_CMAKE_TEXT})
   set(CAVESceneManager_DIR /home/user/inVRs_OSG/lib/cmake/CAVESceneManager CACHE PATH ${USER_CMAKE_TEXT})
-  set(VRPN_ROOT_DIR /usr/local CACHE PATH ${USER_CMAKE_TEXT}
+  set(VRPN_ROOT_DIR /usr/local CACHE PATH ${USER_CMAKE_TEXT})
 ```
 
 Further, you need to replace `config/mono.csm` in your student project with the `mono.csm` of this repository. It is a copy of the file `/sw/config/opensg/csm/mono.csm` of the V2C/LRZ system (see `start_demo_Release` script).
