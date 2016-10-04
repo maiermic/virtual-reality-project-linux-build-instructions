@@ -241,6 +241,9 @@ Open `user.cmake` in your favorite text editor.
  - configure VRPN:
    - replace `#set (vrpn_ROOT_DIR $env(VRPN_HOME) )` with `set (vrpn_ROOT_DIR /usr/local)`
    - uncomment `#set (vrpn_INCLUDE_DIR $(vrpn_ROOT_DIR)/include )` to `set (vrpn_INCLUDE_DIR $(vrpn_ROOT_DIR)/include )`
+
+     > If cmake complains that it can not find `vrpn_INCLUDE_DIR`, uncomment it back and try only with set `vrpn_ROOT_DIR` variable.
+
  - configure OpenSG:
    - replace `#set (OPENSG_BIN_DIR /bin)` with
 
