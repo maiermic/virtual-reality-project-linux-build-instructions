@@ -248,11 +248,11 @@ Open `user.cmake` in your favorite text editor.
    - replace `#set (OPENSG_BIN_DIR /bin)` with
 
      ```cmake
-     set (OPENSG_BIN_DIR /path/to/opensg/build/bin)
+     set (OPENSG_BIN_DIR /path/to/opensg/install/bin)
      set (OPENSG_ROOT /usr/local/)
      ```
 
-     and change `/path/to/opensg` to the source directory (cloned repository) of OpenSG2.
+     and change `/path/to/opensg/install` to the install directory of OpenSG2. This woudld be either the install prefix or `/usr/local/bin` if none was given.
 
 To fix a compilation error with my GNU C++ compiler, (I had to) edit source file `/path/to/inVRs_OSG/src/inVRs/Modules/Interaction/SharedManipulationMerger.cpp`. Replace `isnan` with `std::isnan` in line 207:
  - **before**
