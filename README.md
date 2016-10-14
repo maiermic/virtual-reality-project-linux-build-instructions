@@ -201,7 +201,7 @@ Create a build directory and go into it:
 mkdir build && cd build
 ```
 
-Generate build environment using `cmake`:
+Generate build environment using `cmake` you can as always set a directory where vrpn should be installed with `D CMAKE_INSTALL_PREFIX=/your/favorite/path`:
 
 ```sh
 cmake ..
@@ -219,6 +219,16 @@ Install VRPN:
 sudo make install
 ```
 
+Fix for libraries:  
+The `find_library` scripts from the next utilities may wrongly expect the vrpn libraries to reside in a `lib64` folder. Go to the installation folder.
+```sh
+cd /path/to/vrpn/install-direcoty
+```
+This should contain: `bin, etc, include, lib, share`.  
+Now create a symbolic link called `lib64` to the `lib` folder:
+```sh
+ln -s lib lib64
+```
 
 #### 4. inVRs
 
