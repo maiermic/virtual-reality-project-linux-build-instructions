@@ -71,8 +71,8 @@ First we have to prepare/configure installation. `--prefix=/usr/local` defines `
 sudo ./bootstrap.sh --prefix=/usr/local
 ```
 
-Now we can start installation:
-
+Now we can start installation: 
+(If you are using python 3 this might throw an error due to an old `print` call in line 280 but you can safely ignore this.)
 ```sh
 sudo ./b2 install
 ```
