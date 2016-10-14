@@ -120,7 +120,7 @@ git checkout edc6d77bf263695d0ca0e11306d1fecd1be18510
 
 This Version has a minor error we need to fix.  
 Open `<OpenSGDir>/Source/System/State/Shader/Base/OSGShaderCacheTree.inl` with your favorite editor and go to line 1171. Here a return value is missing. Since `returnValue` is still `NULL` at this point we can use this. Consequently the if should look as follows:
-```C++
+```c++
 if(pCurrNode == NULL)
     return returnValue;
 ```
@@ -245,12 +245,11 @@ Open `user.cmake` in your favorite text editor.
  - enable VRPN support
    - uncomment the line `#set (INVRS_ENABLE_VRPN_SUPPORT ON)`
    - just remove `#` at the beginning; it should look like this `set (INVRS_ENABLE_VRPN_SUPPORT ON)`
+ - configure Boost (only necessary if you set a prefix while bootstrapping):
+   - write for example after line 13: `set(BOOST_ROOT /absolute/path/to/your/boost-prefix)`
  - configure VRPN:
-   - replace `#set (vrpn_ROOT_DIR $env(VRPN_HOME) )` with `set (vrpn_ROOT_DIR /usr/local)`
-   - uncomment `#set (vrpn_INCLUDE_DIR $(vrpn_ROOT_DIR)/include )` to `set (vrpn_INCLUDE_DIR $(vrpn_ROOT_DIR)/include )`
-
-     > If cmake complains that it can not find `vrpn_INCLUDE_DIR`, uncomment it back and try only with set `vrpn_ROOT_DIR` variable.
-
+   - replace `#set (vrpn_ROOT_DIR $env(VRPN_HOME) )` with `set (VRPN_ROOT_DIR /path/to/your/installation)`
+   
  - configure OpenSG:
    - replace `#set (OPENSG_BIN_DIR /bin)` with
 
@@ -286,7 +285,7 @@ cmake -C ../user.cmake -D CMAKE_CXX_FLAGS="-std=c++11" ..
 ```
 
 Build project:
-
+(*ATTENTION* a fully parallel build with `make -j` has been observed to overflow even 16GB of RAM which might crash your system. Parallelization with up to three quarters of your logical CPUs seems to be save. So for a four CPU machine you could try `make -j3`.)
 ```sh
 make
 ```
