@@ -118,16 +118,23 @@ and checkout the version of 2015-01-16:
 git checkout edc6d77bf263695d0ca0e11306d1fecd1be18510
 ```
 
+This Version has a minor error we need to fix.  
+Open `<OpenSGDir>/Source/System/State/Shader/Base/OSGShaderCacheTree.inl` with your favorite editor and go to line 1171. Here a return value is missing. Since `returnValue` is still `NULL` at this point we can use this. Consequently the if should look as follows:
+```C++
+if(pCurrNode == NULL)
+    return returnValue;
+```
+
 Next create a build directory and go into it:
 
 ```sh
 mkdir build && cd build
 ```
 
-First we generate a build environment using `cmake`:
+First we generate a build environment using `cmake` and ensuring the C++11 standard is used:
 
 ```sh
-cmake ..
+cmake -D CMAKE_CXX_FLAGS="-std=c++11" ..
 ```
 
 > ##### Notes
@@ -146,11 +153,11 @@ cmake ..
 > Both combined look like this:
 >
 > ```sh
-> cmake -D BOOST_ROOT=/sw/boost/1.53.0 -D CMAKE_INSTALL_PREFIX=/sw/opensg/2.0/2015-01-16 ..
+> cmake -D BOOST_ROOT=/sw/boost/1.53.0 -D CMAKE_INSTALL_PREFIX=/sw/opensg/2.0/2015-01-16 -D CMAKE_CXX_FLAGS="-std=c++11" ..
 > ```
 
 Build the project:
-
+(*ATTENTION* a fully parallel build with `make -j` has been observed to overflow even 16GB of RAM which might crash your system. Parallelization with up to three quarters of your logical CPUs seems to be save. So for a four CPU machine you could try `make -j3`.)
 ```sh
 make
 ```
