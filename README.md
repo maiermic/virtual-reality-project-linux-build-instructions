@@ -417,3 +417,24 @@ A window opens, but nothing is rendered yet. We need to run our program to see t
 ```
 
 A small black window opens where you can input keyboard commands to your program. Your application is rendered in the window of the render server.
+
+### Known issues and fixes for newer systems
+
+#### OpenSG fails to build with QT error
+If you have QT4 and QT5 installed on your system, the installation of OpenSG might fail as cmake may try to generate files for the QT4 part with `qmake5`. To avoid this disable the QT4 part which is only another version of the same scene manager. This is done by setting the Variables `OSGBUILD_OSGContribCSMQt` and  `OSGBUILD_OSGWindowQT4` to `OFF` through `cmake`.
+
+#### VRPN: `union wait status` undefined
+The `union wait` from `bits/waitstatus.h` included by `sys/wait.h` used by `vrpn_Connection.C` is deprecated and already removed in the latest versions. The usage of this union has been fixed in the [git repository](https://github.com/vrpn/vrpn) of vrpn but at the time of the writing of this guide no release containing the fix has been published. It is therefore recommended to pull and use the latest revision. The rest of the guide still applies, but it might be necessary to (de-)activate some components. Fiddling through `ccmake` is highly encouraged!
+
+#### MyProject fails to build because of unknown `q_`-something functions
+VRPN uses its internal `quat` library. The file `libvrpn.a` relies on `libquat.a` during the compile and linking steps but it is not included which causes an error. A quick and maybe not so clean way is to modify `student-project/cmake/Modules/FindVRPN.cmake` to also include the `quat` library. After line 44 insert the following:
+```cmake
+find_library(QUAT_LIBRARY_RELEASE
+    NAMES quat
+    PATHS ${FIND_HINT_DIRS}
+    PATH_SUFFIXES ${PATH_SUFFIX}
+    DOC "library"
+)
+set(VRPN_LIBRARY_RELEASE ${VRPN_LIBRARY_RELEASE} ${QUAT_LIBRARY_RELEASE})
+```
+This finds `libquat.a`, saves its path in `QUAT_LIBRARY_RELEASE` and appends it to `VRPN_LIBRARY_RELEASE` so the two will always be used together.
