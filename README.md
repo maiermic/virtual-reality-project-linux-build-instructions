@@ -71,8 +71,8 @@ First we have to prepare/configure installation. `--prefix=/usr/local` defines `
 sudo ./bootstrap.sh --prefix=/usr/local
 ```
 
-Now we can start installation:
-
+Now we can start installation: 
+(If you are using python 3 this might throw an error due to an old `print` call in line 280 but you can safely ignore this.)
 ```sh
 sudo ./b2 install
 ```
@@ -118,16 +118,23 @@ and checkout the version of 2015-01-16:
 git checkout edc6d77bf263695d0ca0e11306d1fecd1be18510
 ```
 
+This Version has a minor error we need to fix.  
+Open `<OpenSGDir>/Source/System/State/Shader/Base/OSGShaderCacheTree.inl` with your favorite editor and go to line 1171. Here a return value is missing. Since `returnValue` is still `NULL` at this point we can use this. Consequently the if should look as follows:
+```c++
+if(pCurrNode == NULL)
+    return returnValue;
+```
+
 Next create a build directory and go into it:
 
 ```sh
 mkdir build && cd build
 ```
 
-First we generate a build environment using `cmake`:
+First we generate a build environment using `cmake` and ensure that the C++11 standard is used:
 
 ```sh
-cmake ..
+cmake -D CMAKE_CXX_FLAGS="-std=c++11" ..
 ```
 
 > ##### Notes
@@ -146,11 +153,11 @@ cmake ..
 > Both combined look like this:
 >
 > ```sh
-> cmake -D BOOST_ROOT=/sw/boost/1.53.0 -D CMAKE_INSTALL_PREFIX=/sw/opensg/2.0/2015-01-16 ..
+> cmake -D BOOST_ROOT=/sw/boost/1.53.0 -D CMAKE_INSTALL_PREFIX=/sw/opensg/2.0/2015-01-16 -D CMAKE_CXX_FLAGS="-std=c++11" ..
 > ```
 
 Build the project:
-
+(*ATTENTION* a fully parallel build with `make -j` has been observed to overflow even 16GB of RAM which might crash your system. Parallelization with up to three quarters of your logical CPUs seems to be save. So for a four CPU machine you could try `make -j3`.)
 ```sh
 make
 ```
@@ -194,7 +201,7 @@ Create a build directory and go into it:
 mkdir build && cd build
 ```
 
-Generate build environment using `cmake`:
+Generate build environment using `cmake` you can as always set a directory where vrpn should be installed with `-D CMAKE_INSTALL_PREFIX=/your/favorite/path`:
 
 ```sh
 cmake ..
@@ -212,6 +219,16 @@ Install VRPN:
 sudo make install
 ```
 
+Fix for libraries:  
+The `find_library` scripts from the next utilities may wrongly expect the vrpn libraries to reside in a `lib64` folder. Go to the installation folder.
+```sh
+cd /path/to/vrpn/install-direcoty
+```
+This should contain: `bin, etc, include, lib, share`.  
+Now create a symbolic link called `lib64` to the `lib` folder:
+```sh
+ln -s lib lib64
+```
 
 #### 4. inVRs
 
@@ -238,21 +255,20 @@ Open `user.cmake` in your favorite text editor.
  - enable VRPN support
    - uncomment the line `#set (INVRS_ENABLE_VRPN_SUPPORT ON)`
    - just remove `#` at the beginning; it should look like this `set (INVRS_ENABLE_VRPN_SUPPORT ON)`
+ - configure Boost (only necessary if you set a prefix while bootstrapping):
+   - write for example after line 13: `set(BOOST_ROOT /absolute/path/to/your/boost-prefix)`
  - configure VRPN:
-   - replace `#set (vrpn_ROOT_DIR $env(VRPN_HOME) )` with `set (vrpn_ROOT_DIR /usr/local)`
-   - uncomment `#set (vrpn_INCLUDE_DIR $(vrpn_ROOT_DIR)/include )` to `set (vrpn_INCLUDE_DIR $(vrpn_ROOT_DIR)/include )`
-
-     > If cmake complains that it can not find `vrpn_INCLUDE_DIR`, uncomment it back and try only with set `vrpn_ROOT_DIR` variable.
-
+   - replace `#set (vrpn_ROOT_DIR $env(VRPN_HOME) )` with `set (VRPN_ROOT_DIR /path/to/your/installation)`
+   
  - configure OpenSG:
    - replace `#set (OPENSG_BIN_DIR /bin)` with
 
      ```cmake
-     set (OPENSG_BIN_DIR /path/to/opensg/build/bin)
-     set (OPENSG_ROOT /usr/local/)
+     set (OPENSG_ROOT /path/to/opensg/install)
+     set (OPENSG_BIN_DIR ${OPENSG_ROOT}/bin)
      ```
 
-     and change `/path/to/opensg` to the source directory (cloned repository) of OpenSG2.
+     and change `/path/to/opensg/install` to the install directory of OpenSG2. This woudld be either the install prefix or `/usr/local/bin` if none was given.
 
 To fix a compilation error with my GNU C++ compiler, (I had to) edit source file `/path/to/inVRs_OSG/src/inVRs/Modules/Interaction/SharedManipulationMerger.cpp`. Replace `isnan` with `std::isnan` in line 207:
  - **before**
@@ -279,7 +295,7 @@ cmake -C ../user.cmake -D CMAKE_CXX_FLAGS="-std=c++11" ..
 ```
 
 Build project:
-
+(*ATTENTION* a fully parallel build with `make -j` has been observed to overflow even 16GB of RAM which might crash your system. Parallelization with up to three quarters of your logical CPUs seems to be save. So for a four CPU machine you could try `make -j3`.)
 ```sh
 make
 ```
@@ -401,3 +417,24 @@ A window opens, but nothing is rendered yet. We need to run our program to see t
 ```
 
 A small black window opens where you can input keyboard commands to your program. Your application is rendered in the window of the render server.
+
+### Known issues and fixes for newer systems
+
+#### OpenSG fails to build with QT error
+If you have QT4 and QT5 installed on your system, the installation of OpenSG might fail as cmake may try to generate files for the QT4 part with `qmake5`. To avoid this disable the QT4 part which is only another version of the same scene manager. This is done by setting the Variables `OSGBUILD_OSGContribCSMQt` and  `OSGBUILD_OSGWindowQT4` to `OFF` through `cmake`.
+
+#### VRPN: `union wait status` undefined
+The `union wait` from `bits/waitstatus.h` included by `sys/wait.h` used by `vrpn_Connection.C` is deprecated and already removed in the latest versions. The usage of this union has been fixed in the [git repository](https://github.com/vrpn/vrpn) of vrpn but at the time of the writing of this guide no release containing the fix has been published. It is therefore recommended to pull and use the latest revision. The rest of the guide still applies, but it might be necessary to (de-)activate some components. Fiddling through `ccmake` is highly encouraged!
+
+#### MyProject fails to build because of unknown `q_`-something functions
+VRPN uses its internal `quat` library. The file `libvrpn.a` relies on `libquat.a` during the compile and linking steps but it is not included which causes an error. A quick and maybe not so clean way is to modify `student-project/cmake/Modules/FindVRPN.cmake` to also include the `quat` library. After line 44 insert the following:
+```cmake
+find_library(QUAT_LIBRARY_RELEASE
+    NAMES quat
+    PATHS ${FIND_HINT_DIRS}
+    PATH_SUFFIXES ${PATH_SUFFIX}
+    DOC "library"
+)
+set(VRPN_LIBRARY_RELEASE ${VRPN_LIBRARY_RELEASE} ${QUAT_LIBRARY_RELEASE})
+```
+This finds `libquat.a`, saves its path in `QUAT_LIBRARY_RELEASE` and appends it to `VRPN_LIBRARY_RELEASE` so the two will always be used together.
