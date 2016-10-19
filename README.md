@@ -131,7 +131,7 @@ Next create a build directory and go into it:
 mkdir build && cd build
 ```
 
-First we generate a build environment using `cmake` and ensuring the C++11 standard is used:
+First we generate a build environment using `cmake` and ensure that the C++11 standard is used:
 
 ```sh
 cmake -D CMAKE_CXX_FLAGS="-std=c++11" ..
@@ -201,7 +201,7 @@ Create a build directory and go into it:
 mkdir build && cd build
 ```
 
-Generate build environment using `cmake` you can as always set a directory where vrpn should be installed with `D CMAKE_INSTALL_PREFIX=/your/favorite/path`:
+Generate build environment using `cmake` you can as always set a directory where vrpn should be installed with `-D CMAKE_INSTALL_PREFIX=/your/favorite/path`:
 
 ```sh
 cmake ..
@@ -264,8 +264,8 @@ Open `user.cmake` in your favorite text editor.
    - replace `#set (OPENSG_BIN_DIR /bin)` with
 
      ```cmake
-     set (OPENSG_BIN_DIR /path/to/opensg/install/bin)
-     set (OPENSG_ROOT /usr/local/)
+     set (OPENSG_ROOT /path/to/opensg/install)
+     set (OPENSG_BIN_DIR ${OPENSG_ROOT}/bin)
      ```
 
      and change `/path/to/opensg/install` to the install directory of OpenSG2. This woudld be either the install prefix or `/usr/local/bin` if none was given.
