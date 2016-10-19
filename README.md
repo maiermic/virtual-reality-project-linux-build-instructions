@@ -7,7 +7,7 @@ I will explain how to
 
 [vr-lecture]: http://www.nm.ifi.lmu.de/teaching/Vorlesungen/2016ss/vr/
 
-**!!! Caution !!!**
+**!!! Caution !!!**  
 Follow the instructions carefully and think about each command before you run it. I assume no responsibility if you break your system.
 
 
@@ -71,7 +71,7 @@ First we have to prepare/configure installation. `--prefix=/usr/local` defines `
 sudo ./bootstrap.sh --prefix=/usr/local
 ```
 
-Now we can start installation: 
+Now we can start installation:  
 (If you are using python 3 this might throw an error due to an old `print` call in line 280 but you can safely ignore this.)
 ```sh
 sudo ./b2 install
@@ -156,7 +156,7 @@ cmake -D CMAKE_CXX_FLAGS="-std=c++11" ..
 > cmake -D BOOST_ROOT=/sw/boost/1.53.0 -D CMAKE_INSTALL_PREFIX=/sw/opensg/2.0/2015-01-16 -D CMAKE_CXX_FLAGS="-std=c++11" ..
 > ```
 
-Build the project:
+Build the project:  
 (*ATTENTION* a fully parallel build with `make -j` has been observed to overflow even 16GB of RAM which might crash your system. Parallelization with up to three quarters of your logical CPUs seems to be save. So for a four CPU machine you could try `make -j3`.)
 ```sh
 make
@@ -250,7 +250,7 @@ Go to source directory:
 cd inVRs_OSG/
 ```
 
-Open `user.cmake` in your favorite text editor. 
+Open `user.cmake` in your favorite text editor.
 
  - enable VRPN support
    - uncomment the line `#set (INVRS_ENABLE_VRPN_SUPPORT ON)`
@@ -259,7 +259,7 @@ Open `user.cmake` in your favorite text editor.
    - write for example after line 13: `set(BOOST_ROOT /absolute/path/to/your/boost-prefix)`
  - configure VRPN:
    - replace `#set (vrpn_ROOT_DIR $env(VRPN_HOME) )` with `set (VRPN_ROOT_DIR /path/to/your/installation)`
-   
+
  - configure OpenSG:
    - replace `#set (OPENSG_BIN_DIR /bin)` with
 
@@ -274,12 +274,12 @@ To fix a compilation error with my GNU C++ compiler, (I had to) edit source file
  - **before**
 
    ```c++
-                   if (isnan(result.position[0])) {
+   if (isnan(result.position[0])) {
    ```
  - **after**
 
    ```c++
-                   if (std::isnan(result.position[0])) {
+   if (std::isnan(result.position[0])) {
    ```
 
 Next create a build directory and go into it:
@@ -294,7 +294,7 @@ Generate build environment using `cmake`:
 cmake -C ../user.cmake -D CMAKE_CXX_FLAGS="-std=c++11" ..
 ```
 
-Build project:
+Build project:  
 (*ATTENTION* a fully parallel build with `make -j` has been observed to overflow even 16GB of RAM which might crash your system. Parallelization with up to three quarters of your logical CPUs seems to be save. So for a four CPU machine you could try `make -j3`.)
 ```sh
 make
@@ -319,7 +319,7 @@ cd /path/to/your/student_project
 Open `./cmake/Modules/AddProject.cmake` and add
 
 ```sh
-        target_link_libraries(${ADD_PROJECT_NAME} -lGL -lpthread)
+target_link_libraries(${ADD_PROJECT_NAME} -lGL -lpthread)
 ```
 
 after line 149. Result look like this (without line numbers at the beginning):
