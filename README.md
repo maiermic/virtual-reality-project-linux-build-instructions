@@ -438,3 +438,7 @@ find_library(QUAT_LIBRARY_RELEASE
 set(VRPN_LIBRARY_RELEASE ${VRPN_LIBRARY_RELEASE} ${QUAT_LIBRARY_RELEASE})
 ```
 This finds `libquat.a`, saves its path in `QUAT_LIBRARY_RELEASE` and appends it to `VRPN_LIBRARY_RELEASE` so the two will always be used together.
+
+#### The window does not show anything / shows something wrong
+OpenSG only works if you are connected to a network (not necessarily internet).
+It's not a bug, it's a feature! -.-
